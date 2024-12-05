@@ -17,4 +17,14 @@ export class ArticleService {
   save(articles: Article[]): Promise<Article[]> {
     return this.articleRepository.save(articles);
   }
+
+  async findById(articleId: number): Promise<Article | undefined> {
+    const article = await this.articleRepository.findOne({
+      where: {
+        id: articleId,
+      },
+    });
+
+    return article ?? undefined;
+  }
 }
