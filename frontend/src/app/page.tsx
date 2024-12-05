@@ -1,12 +1,16 @@
-
-import { BottomNav } from '@/components/bottom-nav'
+import { Suspense } from 'react'
+import { MobileHeader } from '@/components/mobile-header'
 import { DateSelector } from '@/components/date-selector'
 import { JobList } from '@/components/job-list'
-import { MobileHeader } from '@/components/mobile-header'
+import { BottomNav } from '@/components/bottom-nav'
 import { Button } from '@/components/ui/button'
 import { MapPin } from 'lucide-react'
+import { fetchArticles } from './actions/fetchArticles'
+import { ClientSwipeableJobCard } from '@/components/client-swipeable-job-card'
 
-export default function Page() {
+export default async function Page() {
+  const articles = await fetchArticles()
+
   return (
     <div className="min-h-screen bg-gray-50">
       <MobileHeader />
@@ -26,9 +30,12 @@ export default function Page() {
             <span className="text-white font-medium">＼初めての方はこちら／</span>
           </div>
         </div>
-        <JobList />
+        <Suspense fallback={<div>Loading...</div>}>
+          <JobList articles={articles} />
+        </Suspense>
       </main>
       <BottomNav />
+      <ClientSwipeableJobCard articles={articles} />
     </div>
   )
 }
