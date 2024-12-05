@@ -10,7 +10,7 @@ export function BottomNav() {
         </button>
         <button className="flex flex-col items-center gap-1">
           <Heart className="w-6 h-6" />
-          <span className="text-xs">スワイプ</span>
+          <span className="text-xs">お気に入り</span>
         </button>
         <button className="flex flex-col items-center gap-1">
           <ClipboardList className="w-6 h-6" />
