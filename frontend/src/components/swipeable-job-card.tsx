@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { useSpring, animated } from '@react-spring/web'
@@ -8,6 +6,7 @@ import { MapPin, ThumbsDown, ThumbsUp, X, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Article } from '@/types/article'
 import { formatTime } from '@/lib/utils'
+import addLike from '@/app/actions/addLike'
 
 interface SwipeableJobCardProps {
   onClose: () => void
@@ -30,22 +29,7 @@ export function SwipeableJobCard({ onClose, articles }: SwipeableJobCardProps) {
 
     if (!active && trigger) {
       const dir = xDir < 0 ? -1 : 1
-      setLeaving(true)
-      api.start({
-        x: dir * (containerRef.current?.offsetWidth || 500),
-        y: 0,
-        rotate: dir * 50,
-        config: { duration: 300 },
-        onRest: () => {
-          setLeaving(false)
-          if (currentIndex < articles.length - 1) {
-            setCurrentIndex(prev => prev + 1)
-          } else {
-            onClose()
-          }
-          api.start({ x: 0, y: 0, rotate: 0, immediate: true })
-        }
-      })
+      handleSwipe(dir === -1 ? 'left' : 'right')
     } else {
       api.start({
         x: active ? mx : 0,
@@ -59,24 +43,27 @@ export function SwipeableJobCard({ onClose, articles }: SwipeableJobCardProps) {
   const currentArticle = articles[currentIndex]
 
   const handleSwipe = (direction: 'left' | 'right') => {
-    const dir = direction === 'left' ? -1 : 1;
-    setLeaving(true);
+    const dir = direction === 'left' ? -1 : 1
+    setLeaving(true)
     api.start({
       x: dir * (containerRef.current?.offsetWidth || 500),
       y: 0,
       rotate: dir * 50,
       config: { duration: 300 },
       onRest: () => {
-        setLeaving(false);
-        if (currentIndex < articles.length - 1) {
-          setCurrentIndex(prev => prev + 1);
-        } else {
-          onClose();
+        setLeaving(false)
+        if (direction === 'right') {
+          addLike(currentArticle.id)
         }
-        api.start({ x: 0, y: 0, rotate: 0, immediate: true });
+        if (currentIndex < articles.length - 1) {
+          setCurrentIndex(prev => prev + 1)
+        } else {
+          onClose()
+        }
+        api.start({ x: 0, y: 0, rotate: 0, immediate: true })
       }
-    });
-  };
+    })
+  }
 
   if (!currentArticle) {
     return null

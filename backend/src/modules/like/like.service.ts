@@ -13,13 +13,17 @@ export class LikeService {
   ) {}
 
   async addLike(articleId: number): Promise<Like> {
-    const like = this.likeRepository.create();
-
     const article = await this.articleService.findById(articleId);
     if (!article) {
       throw new Error('Article not found');
     }
 
+    let like = await this.likeRepository.findOne({ where: { article } });
+    if (like) {
+      return like;
+    }
+
+    like = this.likeRepository.create();
     like.article = article;
 
     return this.likeRepository.save(like);
