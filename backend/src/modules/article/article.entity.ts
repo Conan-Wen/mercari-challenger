@@ -1,20 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsBoolean,
-  IsDate,
-  IsDecimal,
-  IsInt,
-  IsOptional,
   IsString,
+  IsOptional,
+  IsInt,
+  IsDecimal,
+  IsDate,
   IsUrl,
 } from 'class-validator';
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Article {
@@ -26,24 +19,16 @@ export class Article {
   id: number;
 
   @ApiProperty({
-    description: '求人タイトル',
-    example: 'ドミノー',
+    description: '求人のタイトル',
+    example: 'アルバイト募集',
   })
   @IsString()
   @Column({ type: 'varchar', nullable: false })
   title: string;
 
   @ApiProperty({
-    description: '求人内容',
-    example: 'ピザを作る仕事',
-  })
-  @IsString()
-  @Column({ type: 'text', nullable: false })
-  description: string;
-
-  @ApiProperty({
-    description: '求人詳細',
-    example: 'ピザを作る仕事です',
+    description: 'より詳細な仕事内容',
+    example: '店舗での接客と簡単な事務作業',
   })
   @IsString()
   @Column({ type: 'text', nullable: false })
@@ -69,11 +54,12 @@ export class Article {
 
   @ApiProperty({
     description: '報酬額',
-    example: 10000.0,
+    example: 1500.0,
   })
   @IsDecimal()
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
-  payment: number;
+  @IsOptional()
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  payment?: number;
 
   @ApiProperty({
     description: '交通費',
@@ -106,8 +92,9 @@ export class Article {
     example: 3,
   })
   @IsInt()
-  @Column({ type: 'int', nullable: false })
-  recruitment_quota: number;
+  @IsOptional()
+  @Column({ type: 'int', nullable: true })
+  recruitment_quota?: number;
 
   @ApiProperty({
     description: '現在の応募者数',
@@ -115,7 +102,7 @@ export class Article {
     default: 0,
   })
   @IsInt()
-  @Column({ type: 'int', default: 0, nullable: false })
+  @Column({ type: 'int', default: 0, nullable: true })
   current_applicants: number;
 
   @ApiProperty({
@@ -144,24 +131,6 @@ export class Article {
   end_time?: string;
 
   @ApiProperty({
-    description: '休憩時間（単位：時間）',
-    example: 1.5,
-  })
-  @IsDecimal()
-  @IsOptional()
-  @Column({ type: 'decimal', precision: 4, scale: 1, nullable: true })
-  break_time?: number;
-
-  @ApiProperty({
-    description: '未経験者歓迎フラグ',
-    example: true,
-    default: true,
-  })
-  @IsBoolean()
-  @Column({ type: 'boolean', default: true, nullable: false })
-  experience_not_required: boolean;
-
-  @ApiProperty({
     description: '求人イメージ画像URL',
     example: 'https://example.com/image.jpg',
   })
@@ -169,18 +138,4 @@ export class Article {
   @IsOptional()
   @Column({ type: 'varchar', nullable: true })
   image_url?: string;
-
-  @ApiProperty({
-    description: 'レコード作成日時',
-    example: '2024-01-01T00:00:00',
-  })
-  @CreateDateColumn({ type: 'datetime' })
-  created_at: Date;
-
-  @ApiProperty({
-    description: 'レコード更新日時',
-    example: '2024-01-02T00:00:00',
-  })
-  @UpdateDateColumn({ type: 'datetime' })
-  updated_at: Date;
 }
