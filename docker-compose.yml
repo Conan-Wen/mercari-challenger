@@ -1,0 +1,31 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./.docker/dockerfile.dev
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - ./frontend:/frontend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./.docker/dockerfile.dev
+    ports:
+      - "3001:3001"
+    restart: always
+    volumes:
+      - ./backend:/backend
+
+  db:
+    image: mariadb:10.11.2
+    env_file: ./database/.env
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ./database/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro

@@ -1,0 +1,5 @@
+FROM node:20.16.0
+
+WORKDIR /frontend
+
+CMD [ "bash", "-c", "npm install && npm run dev" ]
