@@ -1,22 +1,28 @@
-from keybert import KeyBERT
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer
+import numpy as np
 
-
-def extract_keywords_and_vectorize(text, keyword_model, vector_model, top_n=10):
+def extract_keywords_tfidf_and_vectorize(text, vector_model, top_n=10):
     """
-    キーワードを抽出し、それをベクトルに変換する。
+    TF-IDFを使用してキーワードを抽出し、それをベクトルに変換する。
 
     Args:
         text (str): 入力文章
-        keyword_model (KeyBERT): キーワード抽出モデル
         vector_model (SentenceTransformer): ベクトル変換モデル
         top_n (int): 抽出するキーワードの数
 
     Returns:
         dict: キーワードとそのベクトルの辞書
     """
-    # キーワードを抽出
-    keywords = [kw[0] for kw in keyword_model.extract_keywords(text, top_n=top_n)]
+    # TF-IDFによる特徴量抽出
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform([text])
+    feature_names = vectorizer.get_feature_names_out()
+    scores = tfidf_matrix.toarray()[0]
+
+    # スコアが高い順にキーワードを選択
+    top_indices = np.argsort(scores)[::-1][:top_n]
+    keywords = [feature_names[i] for i in top_indices]
 
     # キーワードをベクトルに変換
     vectors = vector_model.encode(keywords)
@@ -26,11 +32,9 @@ def extract_keywords_and_vectorize(text, keyword_model, vector_model, top_n=10):
 
 
 # モデルの初期化
-keyword_model = KeyBERT("distilbert-base-nli-mean-tokens")
 vector_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # 入力文章
-text = "人工知能（AI）は、近年急速に進化しており、さまざまな産業でその利用が進んでいます。特に機械学習やディープラーニングの技術が注目されています。"
 text1 = f"""勤務までの流れ
 お仕事にマッチング: 募集内容に合った店舗での業務が割り当てられる。
 事前準備: マッチングした店舗で腸内検査キットを受け取る。
@@ -53,8 +57,8 @@ text1 = f"""勤務までの流れ
 災害など不可抗力による業務キャンセルの可能性。
 勤務時に必要な検査キットを忘れると勤務できない。"""
 
-# キーワード抽出とベクトル化の実行
-result = extract_keywords_and_vectorize(text1, keyword_model, vector_model)
+# TF-IDFによるキーワード抽出とベクトル化の実行
+result = extract_keywords_tfidf_and_vectorize(text1, vector_model)
 
 # 結果の表示
 for keyword, vector in result.items():
