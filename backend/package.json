@@ -8,6 +8,8 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "seed": "dotenvx run -- node dist/cli/cli-main.js createArticleSeed",
+    "seed:dev": "dotenvx run -f .env.development -- ts-node src/cli/cli-main.ts createArticleSeed",
     "start": "nest start",
     "start:debug": "dotenvx run -f .env.development -- nest start --debug --watch",
     "start:dev": "dotenvx run -f .env.development -- nest start --watch",
@@ -27,6 +29,7 @@
     "@nestjs/swagger": "^8.1.0",
     "class-validator": "^0.14.1",
     "mysql": "^2.18.1",
+    "nest-commander": "^3.15.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20"

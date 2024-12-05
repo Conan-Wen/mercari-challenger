@@ -7,6 +7,7 @@ import { articleRepositoryTypeORM } from './article.repository.typeorm';
 @Module({
   imports: [DbModule],
   providers: [ArticleService, articleRepositoryTypeORM],
+  exports: [ArticleService],
   controllers: [ArticleController],
 })
 export class ArticleModule {}

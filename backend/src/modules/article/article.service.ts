@@ -13,4 +13,8 @@ export class ArticleService {
   getArticles(): Promise<Article[]> {
     return this.articleRepository.find();
   }
+
+  save(articles: Article[]): Promise<Article[]> {
+    return this.articleRepository.save(articles);
+  }
 }

@@ -1,5 +1,5 @@
-import { Article } from 'src/modules/article/article.entity';
 import { DataSource } from 'typeorm';
+import { Article } from '../modules/article/article.entity';
 
 export const dataSource = new DataSource({
   type: 'mariadb',

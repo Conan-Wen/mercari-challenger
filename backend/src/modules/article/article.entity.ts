@@ -1,6 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsDate, IsDecimal, IsInt, IsOptional, IsString, IsUrl } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  IsBoolean,
+  IsDate,
+  IsDecimal,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUrl,
+} from 'class-validator';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Article {
@@ -55,7 +69,7 @@ export class Article {
 
   @ApiProperty({
     description: '報酬額',
-    example: 10000.00,
+    example: 10000.0,
   })
   @IsDecimal()
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
@@ -63,7 +77,7 @@ export class Article {
 
   @ApiProperty({
     description: '交通費',
-    example: 500.00,
+    example: 500.0,
   })
   @IsDecimal()
   @IsOptional()
