@@ -6,7 +6,7 @@ import { Article } from './article.entity';
 @ApiTags('article')
 @Controller('article')
 export class ArticleController {
-  constructor(private articleService: ArticleService) {}
+  constructor(private articleService: ArticleService) { }
 
   @ApiOperation({ summary: '求人一覧取得' })
   @ApiResponse({
@@ -16,6 +16,6 @@ export class ArticleController {
   })
   @Get('/')
   getArticles() {
-    return 'Hello World!';
+    return this.articleService.getArticles();
   }
 }
