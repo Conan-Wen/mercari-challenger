@@ -30,7 +30,7 @@ export const articlesSeed: Article[] = [
 - 業務キャンセルの場合は、必ず前日までにご連絡ください。
 - 業務中はスマートフォンの使用は禁止されています。
 `,
-    applicant_eligibility: '高校生可、未経験者歓迎',
+    applicant_eligibility: '未経験者歓迎',
     application_deadline: new Date('2024-12-31T23:59:59'),
     payment: 1050.0,
     transportation_fee: 500,
@@ -276,7 +276,7 @@ export const articlesSeed: Article[] = [
 - ピーク時は忙しくなりますので、テキパキ動ける方。
 - お客様第一で行動してください。
 `,
-    applicant_eligibility: '高校生可、笑顔で接客できる方',
+    applicant_eligibility: '笑顔で接客できる方',
     application_deadline: new Date('2024-12-22T23:59:59'),
     payment: 1020.0,
     transportation_fee: undefined,
