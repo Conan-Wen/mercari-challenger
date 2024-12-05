@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { MapPin } from 'lucide-react'
 import { fetchArticles } from './actions/fetchArticles'
 import { ClientSwipeableJobCard } from '@/components/client-swipeable-job-card'
+import Image from 'next/image';
 
 export default async function Page() {
   const articles = await fetchArticles()
@@ -26,8 +27,15 @@ export default async function Page() {
         </div>
         <DateSelector />
         <div className="px-4 py-4">
-          <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-300 rounded-lg p-6 text-center">
-            <span className="text-white font-medium">＼初めての方はこちら／</span>
+          <div className="relative w-full">
+            <Image
+              src="/fresh_man.svg"
+              alt="初めての方はこちら"
+              width={367}
+              height={129}
+              className="w-full h-auto"
+              priority
+            />
           </div>
         </div>
         <Suspense fallback={<div>Loading...</div>}>
