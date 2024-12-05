@@ -1,0 +1,3 @@
+export const articleConstants = {
+  ARTICLE_REPOSITORY_TYPEORM: 'ARTICLE_REPOSITORY_TYPEORM',
+};
