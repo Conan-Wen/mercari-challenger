@@ -29,3 +29,16 @@ services:
     restart: always
     volumes:
       - ./database/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+
+  reco-system:
+    build:
+      context: ./reco-system
+      dockerfile: ./.docker/dockerfile.dev
+    env_file: ./reco-system/.env
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "8000:8000"
+    restart: always
+    volumes:
+      - ./reco-system:/reco-system
