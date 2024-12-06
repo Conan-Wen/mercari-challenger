@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, Param, Post } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { LikeService } from './like.service';
 import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { Like } from './like.entity';
@@ -21,5 +21,11 @@ export class LikeController {
   @Post('/:articleId')
   async addLike(@Param('articleId') articleId: number) {
     return this.likeService.addLike(articleId);
+  }
+
+  @ApiOperation({ summary: 'ユーザ好みによって性格分析' })
+  @Get('/analyze')
+  async analyze() {
+    return this.likeService.analyze();
   }
 }
