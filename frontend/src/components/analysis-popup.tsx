@@ -33,7 +33,7 @@ export function AnalysisPopup({ onClose }: AnalysisPopupProps) {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
             <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-                <h2 className="text-2xl font-bold mb-4">性格分析</h2>
+                <h2 className="text-2xl font-bold mb-4">適職分析</h2>
                 {isLoading ? (
                     <p className="mb-4">分析結果を読み込んでいます...</p>
                 ) : result ? (
