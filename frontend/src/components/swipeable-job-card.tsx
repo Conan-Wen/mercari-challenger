@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Article } from '@/types/article'
 import { formatTime } from '@/lib/utils'
 import { AnalysisPopup } from './analysis-popup'
+import addLike from '@/app/actions/addLike'
 
 interface SwipeableJobCardProps {
   onClose: () => void
@@ -56,7 +57,7 @@ export function SwipeableJobCard({ onClose, articles }: SwipeableJobCardProps) {
       onRest: () => {
         setLeaving(false)
         if (direction === 'right') {
-          console.log("Hello World")
+          addLike(currentArticle.id)
         }
         if (currentIndex < articles.length - 1) {
           setCurrentIndex(prev => prev + 1)

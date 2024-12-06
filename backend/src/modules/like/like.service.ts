@@ -46,7 +46,7 @@ export class LikeService {
           {
             role: 'system',
             content:
-              'ユーザは以下のアルバイトに興味があります。そこから、このユーザはどんな性格かを推測してください。（200程度でまとめてください)\nユーザを呼ばずに、第二人称を使ってください。',
+              'ユーザは以下のアルバイトに興味があります。そこから、このユーザはどんな性格かを推測してください。（200程度でまとめてください)\nユーザを呼ばずに、第二人称を使ってください。また、予測用のデータが足りない場合は、その旨を伝えてください。「ユーザ」という言葉を絶対に使わず、分析対象者と対話の形でやってください。',
           },
           { role: 'user', content: promp },
         ],
@@ -59,7 +59,7 @@ export class LikeService {
       },
     );
 
-    console.log(res.data.choices[0].message.content);
+    this.likeRepository.clear();
 
     return { result: res.data.choices[0].message.content };
   }
