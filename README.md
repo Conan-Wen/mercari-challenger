@@ -4,11 +4,21 @@
 
 Mercari Challenger Hackathon 2024 の参加作品です。
 
+## 環境変数設定
+
+以下の環境変数を設定してください。
+
+`./backend/.env.development`
+
+`./frontend/.env.development`
+
+`./database/.env`
+
 ## 起動方法
 
 ```bash
 $ docker compose up
-```
+````
 
 ### 動作確認
 
